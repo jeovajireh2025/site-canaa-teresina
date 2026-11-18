@@ -1,0 +1,451 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ministério Canaã · Teresina</title>
+<meta name="description" content="Horários dos cultos, endereço, rádio gospel e previsão do tempo da Congregação Canaã em Teresina/PI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+/* Layout: coluna única central, faixa de "próximo culto" no topo, cards de cultos em lista de calendário. */
+:root{
+  --bg:#08113a; --surface:#101c58; --ink:#eef0ff; --muted:#aab2e0;
+  --line:#243285; --green:#4338c9; --honey:#ff4d58; --honey-soft:#32184a;
+  --on-green:#ffffff; --sun:#ffed00;
+  --display:"Young Serif", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+a{color:inherit}
+.wrap{max-width:960px; margin:0 auto}
+h1,h2{font-family:var(--display); font-weight:400; line-height:1.12; text-wrap:balance; margin:0}
+h2{font-size:1.7rem}
+.eyebrow{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:600}
+
+/* topo */
+header{display:flex; justify-content:space-between; align-items:center; gap:16px; padding-block:20px; flex-wrap:wrap}
+.brand{font-family:var(--display); font-size:1.25rem; text-decoration:none; display:flex; align-items:center; gap:12px}
+.logo{height:48px; width:auto; max-width:120px; object-fit:contain; border-radius:6px}
+.brand small{display:block; font-family:var(--body); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+nav{display:flex; gap:6px; font-size:.95rem; flex-wrap:wrap}
+nav a{position:relative; text-decoration:none; color:var(--muted); padding:9px 16px; border-radius:99px; border:1px solid transparent; font-weight:500; transition:background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease; -webkit-tap-highlight-color:transparent}
+nav a::after{content:""; position:absolute; left:16px; right:16px; bottom:5px; height:2px; background:var(--sun); border-radius:2px; transform:scaleX(0); transform-origin:left; transition:transform .25s ease}
+nav a:hover,nav a:focus-visible{color:#fff; background:rgba(255,255,255,.12); border-color:var(--line); transform:translateY(-4px) scale(1.06); box-shadow:0 8px 18px rgba(0,0,0,.35)}
+nav a:hover::after,nav a:focus-visible::after{transform:scaleX(1)}
+nav a:active{background:var(--green); border-color:var(--green); color:#fff; transform:scale(.94)}
+nav a:active::after{transform:scaleX(1)}
+:focus-visible{outline:3px solid var(--honey); outline-offset:3px; border-radius:4px}
+
+/* hero */
+.hero{position:relative; overflow:hidden; color:#fff; border-radius:20px; padding:clamp(24px,5vw,48px); padding-top:clamp(150px,26vw,230px); display:grid; gap:24px; grid-template-columns:1.3fr 1fr; align-items:end; background:#241b6b; isolation:isolate}
+.hero::after{content:""; position:absolute; inset:-24px; z-index:-2; background:url("foto-igreja.jpg") center 55%/cover no-repeat; filter:blur(2px)}
+.hero::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(36,27,107,.25) 0%, rgba(36,27,107,.62) 45%, rgba(26,19,80,.95) 100%)}
+.hero-logo{position:absolute; top:16px; right:16px; background:#fff; border-radius:14px; padding:10px 14px; box-shadow:0 6px 24px rgba(0,0,0,.28)}
+.hero-logo img{display:block; height:clamp(44px,8vw,68px); width:auto; max-width:60vw}
+.hero h1{font-size:clamp(2rem,5.5vw,3.4rem)}
+.hero p{margin:12px 0 0; max-width:46ch; opacity:.95}
+.next{background:rgba(20,14,70,.55); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.28); border-radius:14px; padding:18px 20px; min-width:0}
+.next .eyebrow{color:var(--on-green); opacity:.75}
+.next strong{display:block; font-family:var(--display); font-weight:400; font-size:1.4rem; margin-top:6px}
+.next span{display:block; opacity:.9}
+.next .when{margin-top:8px; color:var(--sun); font-weight:600}
+@media (max-width:720px){.hero{grid-template-columns:1fr}}
+
+section{padding-top:56px}
+section>.eyebrow{margin-bottom:6px}
+
+/* programação */
+.days{list-style:none; margin:20px 0 0; padding:0; display:grid; gap:10px}
+.day{display:grid; grid-template-columns:110px 1fr auto; gap:16px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 20px}
+.day .dow{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--muted)}
+.day .name{font-family:var(--display); font-size:1.2rem; min-width:0}
+.day time{font-variant-numeric:tabular-nums; font-weight:600; font-size:1.15rem}
+.day.is-next{border-color:var(--honey); background:var(--honey-soft)}
+.day.is-next .dow{color:var(--honey)}
+.tag{display:inline-block; margin-left:8px; font-family:var(--body); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; background:var(--honey); color:#fff; padding:2px 8px; border-radius:99px; vertical-align:middle}
+@media (max-width:520px){.day{grid-template-columns:1fr auto; row-gap:2px}.day .dow{grid-column:1/-1}}
+
+/* duas colunas: clima e rádio */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px; min-width:0}
+.card h3{margin:0 0 14px; font-family:var(--body); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:600}
+
+/* clima */
+.now{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
+.temp{font-family:var(--display); font-size:3.4rem; line-height:1; font-variant-numeric:tabular-nums}
+.cond{font-size:1.1rem}
+.meta{color:var(--muted); font-size:.92rem; margin-top:6px}
+.forecast{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:18px}
+.fday{border-top:1px solid var(--line); padding-top:10px; font-size:.9rem; font-variant-numeric:tabular-nums}
+.fday b{display:block; font-weight:600}
+.fday span{color:var(--muted)}
+.status{color:var(--muted); font-size:.92rem}
+
+/* rádio */
+.player{display:flex; align-items:center; gap:14px}
+.play{flex:none; width:56px; height:56px; border-radius:50%; border:0; background:var(--green); color:var(--on-green); cursor:pointer; display:grid; place-items:center}
+.play:hover{filter:brightness(1.12)}
+.play svg{width:22px; height:22px; fill:currentColor}
+.play .ico-pause{display:none}
+.playing .play .ico-play{display:none}
+.playing .play .ico-pause{display:block}
+.now-playing{min-width:0}
+.now-playing b{display:block; font-family:var(--display); font-weight:400; font-size:1.15rem; overflow-wrap:anywhere}
+.now-playing span{color:var(--muted); font-size:.9rem}
+.bars{display:flex; gap:3px; align-items:flex-end; height:18px; margin-top:6px}
+.bars i{width:4px; height:4px; background:var(--honey); border-radius:2px}
+.playing .bars i{animation:eq 1s ease-in-out infinite}
+.playing .bars i:nth-child(2){animation-delay:.2s}
+.playing .bars i:nth-child(3){animation-delay:.4s}
+.playing .bars i:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:4px}50%{height:18px}}
+.vol{display:flex; align-items:center; gap:10px; margin-top:16px; font-size:.9rem; color:var(--muted)}
+.vol input{flex:1; accent-color:var(--green); min-width:0}
+
+
+/* história */
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px}
+.stat{background:var(--green); color:var(--on-green); border-radius:16px; padding:20px; min-width:0}
+.stat b{display:block; font-family:var(--display); font-weight:400; font-size:clamp(1.8rem,5vw,2.8rem); line-height:1; font-variant-numeric:tabular-nums}
+.stat span{display:block; margin-top:6px; font-size:.82rem; letter-spacing:.12em; text-transform:uppercase; opacity:.85}
+.lead{max-width:60ch; color:var(--muted); margin:12px 0 0}
+.timeline{list-style:none; margin:32px 0 0; padding:0 0 0 22px; border-left:3px solid var(--line); display:grid; gap:22px}
+.tl{position:relative; min-width:0}
+.tl::before{content:""; position:absolute; left:-30px; top:6px; width:13px; height:13px; border-radius:50%; background:var(--bg); border:3px solid var(--honey)}
+.tl.last::before{background:var(--honey)}
+.tl time{display:block; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--honey)}
+.tl h3{margin:4px 0 6px; font-family:var(--display); font-weight:400; font-size:1.3rem; line-height:1.2}
+.tl p{margin:0; max-width:62ch; color:var(--muted)}
+@media (max-width:520px){.stats{grid-template-columns:1fr}.stat{display:flex; align-items:baseline; gap:12px}.stat span{margin-top:0}}
+
+/* ao vivo */
+.video{margin-top:20px; background:#000; border:1px solid var(--line); border-radius:16px; overflow:hidden; aspect-ratio:16/9; max-width:100%}
+.video iframe{display:block; width:100%; height:100%; border:0}
+.video-note{color:var(--muted); font-size:.92rem; margin:14px 0 0; max-width:62ch}
+
+/* endereço */
+.where{display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin-top:20px}
+@media (max-width:760px){.where{grid-template-columns:1fr}}
+address{font-style:normal; font-size:1.15rem}
+.btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+.btn{display:inline-block; padding:11px 18px; border-radius:99px; text-decoration:none; font-weight:600; font-size:.95rem; border:1px solid var(--green); background:var(--green); color:var(--on-green)}
+.btn.alt{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn:hover{filter:brightness(1.1)}
+
+footer{margin-top:64px; padding-block:28px 40px; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+/* efeito de movimento ao passar o mouse ou tocar */
+.day,.card,.stat,.btn,.tl{transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease; -webkit-tap-highlight-color:transparent}
+@media (hover:hover){
+  .day:hover,.card:hover,.stat:hover{transform:translateY(-5px); box-shadow:0 14px 28px rgba(0,0,0,.4); border-color:var(--honey)}
+  .btn:hover{transform:translateY(-3px) scale(1.04); box-shadow:0 10px 20px rgba(0,0,0,.4)}
+  .tl:hover{transform:translateX(6px)}
+}
+.day:active,.card:active,.stat:active{transform:scale(.97)}
+.btn:active{transform:scale(.95)}
+@media (prefers-reduced-motion:reduce){ .day,.card,.stat,.btn,.tl{transition:none} .day:hover,.card:hover,.stat:hover,.btn:hover,.tl:hover,.day:active,.card:active,.stat:active,.btn:active{transform:none}html{scroll-behavior:auto} nav a,nav a::after{transition:none} nav a:hover,nav a:focus-visible,nav a:active{transform:none}.playing .bars i{animation:none;height:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="#topo"><span>Ministério Canaã<small>Congregação Teresina</small></span></a>
+  <nav aria-label="Seções">
+    <a href="#cultos">Cultos</a>
+    <a href="#aovivo">Ao vivo</a>
+    <a href="#radio">Rádio e clima</a>
+    <a href="#historia">História</a>
+    <a href="#endereco">Endereço</a>
+  </nav>
+</header>
+
+<main id="topo">
+  <div class="hero">
+    <div class="hero-logo"><img id="logo" src="logo-canaa.png" alt="Logo do Ministério Canaã: uma promessa de Deus" width="200" height="54"></div>
+    <div>
+      <p class="eyebrow" style="color:#fff;opacity:.85;margin:0 0 10px">Teresina · Piauí</p>
+      <h1>Venha adorar conosco.</h1>
+      <p>Cultos durante a semana e aos domingos na Avenida Miguel Rosa, no bairro Vermelha. Quem chega é bem-vindo.</p>
+    </div>
+    <div class="next" aria-live="polite">
+      <div class="eyebrow">Próximo culto</div>
+      <strong id="next-name">—</strong>
+      <span id="next-time"></span>
+      <span class="when" id="next-when"></span>
+    </div>
+  </div>
+
+  <section id="cultos" aria-labelledby="t-cultos">
+    <div class="eyebrow">Programação</div>
+    <h2 id="t-cultos">Programação dos Cultos</h2>
+    <ul class="days" id="days"></ul>
+  </section>
+
+  <section id="aovivo" aria-labelledby="t-live">
+    <div class="eyebrow">Direto da sede</div>
+    <h2 id="t-live">Acompanhe os cultos online</h2>
+    <p class="lead">Assista pelo canal do Ministério Canaã no YouTube, de onde você estiver.</p>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/live_stream?channel=UCdbNLeZXby80cngABFSSUtQ" title="Transmissão ao vivo do Ministério Canaã no YouTube" allow="accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <p class="video-note">Se não houver transmissão no momento, o vídeo não carrega. Veja os cultos anteriores direto no canal.</p>
+    <div class="btns">
+      <a class="btn" href="https://www.youtube.com/channel/UCdbNLeZXby80cngABFSSUtQ" target="_blank" rel="noopener">Abrir o canal no YouTube</a>
+    </div>
+  </section>
+
+  <section id="radio" aria-labelledby="t-radio">
+    <div class="eyebrow">Para ouvir e planejar</div>
+    <h2 id="t-radio">Rádio Canaã e clima em Teresina</h2>
+    <div class="two">
+
+      <div class="card" id="radio-card">
+        <h3>Rádio Canaã FM 93,5</h3>
+        <div class="player">
+          <button class="play" id="play" type="button" aria-label="Tocar rádio">
+            <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="now-playing">
+            <b id="station-name">Canaã FM 93,5</b>
+            <span id="station-status">Ao vivo da sede · toque em play</span>
+            <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <label class="vol">Volume
+          <input id="vol" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+        </label>
+        <audio id="audio" preload="none"></audio>
+      </div>
+
+      <div class="card">
+        <h3>Clima agora</h3>
+        <div id="weather"><p class="status">Carregando a previsão…</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="historia" aria-labelledby="t-hist">
+    <div class="eyebrow">O Ministério</div>
+    <h2 id="t-hist">Nossa História</h2>
+    <p class="lead">Conheça como surgiu este grande projeto espiritual.</p>
+    <div class="stats">
+      <div class="stat"><b>+50.000</b><span>Membros</span></div>
+      <div class="stat"><b>+120</b><span>Congregações</span></div>
+      <div class="stat"><b>+50</b><span>Cidades</span></div>
+    </div>
+    <ol class="timeline">
+      <li class="tl">
+        <time>14 de fevereiro de 2000</time>
+        <h3>Fundação do Ministério Canaã</h3>
+        <p>O Ministério Canaã foi fundado oficialmente em 14 de fevereiro de 2000. De forma desprendida, o pastor Jecer Goes deu início ao trabalho em uma sala do antigo Hotel Colonial, na Av. Beira Mar, em Fortaleza.</p>
+      </li>
+      <li class="tl">
+        <time>16 de fevereiro de 2000</time>
+        <h3>Primeiro culto</h3>
+        <p>No primeiro culto, dois dias depois da fundação, estavam presentes menos de 30 irmãos.</p>
+      </li>
+      <li class="tl">
+        <time>16 de março de 2000</time>
+        <h3>Primeira mudança</h3>
+        <p>Após 30 dias, o trabalho foi transferido para o Colégio Professora Jemina Gois, no bairro Pan Americano, e os cultos eram realizados na quadra da escola.</p>
+      </li>
+      <li class="tl">
+        <time>Junho de 2000</time>
+        <h3>Segunda mudança</h3>
+        <p>Passados três meses, a igreja passou a ser sediada em um prédio alugado na Av. do Imperador (esquina com a Av. Domingos Olímpio), no Centro de Fortaleza. Todos os que faziam parte daquela obra inicial ficaram “orgulhosos”, pois para eles o imóvel era grande e proporcionava melhores condições de realizar um bom trabalho.</p>
+      </li>
+      <li class="tl">
+        <time>2003</time>
+        <h3>Sede na José Bastos</h3>
+        <p>Com o crescimento da obra, foi alugado o antigo prédio da Antártica, na avenida José Bastos. Foi ali que os milagres começaram a acontecer e Deus trouxe um grande avivamento.</p>
+      </li>
+      <li class="tl">
+        <time>2006</time>
+        <h3>Início da construção do Santuário</h3>
+        <p>Deus abriu as portas do céu e cumpriu a promessa que fez ao pastor Jecer há muitos anos. Foi adquirido um grande terreno no bairro Passaré, onde começou a construção do Santuário Canaã.</p>
+      </li>
+      <li class="tl last">
+        <time>2021</time>
+        <h3>Maior Templo Evangélico do Nordeste</h3>
+        <p>Hoje o Santuário Canaã é o maior templo evangélico do Nordeste, com capacidade para 12.000 pessoas. O Ministério Canaã conta atualmente com 120 igrejas anunciando o Evangelho pelas plataformas digitais, pela rádio e pelo evangelismo nas ruas, bairros, cidades e municípios.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="endereco" aria-labelledby="t-end">
+    <div class="eyebrow">Como chegar</div>
+    <h2 id="t-end">Endereço</h2>
+    <div class="where">
+      <div class="card">
+        <address>
+          Avenida Miguel Rosa, 5488<br>
+          Bairro Vermelha<br>
+          Teresina / PI
+        </address>
+        <div class="btns">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Avenida+Miguel+Rosa+5488+Vermelha+Teresina+PI" target="_blank" rel="noopener">Abrir no mapa</a>
+          <a class="btn alt" href="https://www.instagram.com/canaa_teresina/?hl=pt" target="_blank" rel="noopener">Instagram @canaa_teresina</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Resumo da semana</h3>
+        <p style="margin:0">Terça e quinta às 19h, quarta às 16h, e domingo em dois momentos: Escola Bíblica às 8h30 e Adoração às 17h45.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Ministério Canaã · Congregação Teresina</span>
+  <a href="https://www.instagram.com/canaa_teresina/?hl=pt" target="_blank" rel="noopener">Instagram</a>
+  <span style="flex-basis:100%">© 2026 Guilherme Silva. Todos os direitos reservados.</span>
+</footer>
+</div>
+
+<script>
+/* ===== 1. Cultos (0=domingo ... 6=sábado) ===== */
+var CULTOS = [
+  {dia:2, nome:"Culto da Gratidão", hora:"19:00"},
+  {dia:3, nome:"Círculo de Oração", hora:"16:00"},
+  {dia:4, nome:"Culto de Ensino",   hora:"19:00"},
+  {dia:0, nome:"Escola Bíblica",    hora:"08:30"},
+  {dia:0, nome:"Adoração",          hora:"17:45"}
+];
+var DIAS = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+var TZ = "America/Fortaleza";
+
+function agoraTeresina(){
+  var p = new Intl.DateTimeFormat("en-US",{timeZone:TZ,weekday:"short",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
+  var m = {}; p.forEach(function(x){m[x.type]=x.value});
+  var map = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+  return {dia:map[m.weekday], min:(parseInt(m.hour,10)%24)*60+parseInt(m.minute,10)};
+}
+function toMin(h){var a=h.split(":");return parseInt(a[0],10)*60+parseInt(a[1],10)}
+
+function proximo(){
+  var n = agoraTeresina(), best=null, bestDelta=Infinity;
+  CULTOS.forEach(function(c){
+    var delta = ((c.dia - n.dia + 7) % 7) * 1440 + toMin(c.hora) - n.min;
+    if(delta < 0) delta += 7*1440;
+    if(delta < bestDelta){bestDelta=delta; best=c}
+  });
+  return {culto:best, delta:bestDelta, hoje:(best.dia===n.dia && bestDelta<1440)};
+}
+function textoQuando(delta, hoje){
+  if(delta < 60) return delta<=1 ? "Começa agora" : "Começa em " + delta + " min";
+  if(hoje){var h=Math.floor(delta/60), m=delta%60; return "Hoje · em " + h + "h" + (m? " " + m + "min":"")}
+  var d = Math.floor(delta/1440);
+  return d===0 ? "Hoje" : (d===1 ? "Amanhã" : "Em " + d + " dias");
+}
+
+function renderCultos(){
+  var ul = document.getElementById("days");
+  var nx = proximo();
+  // ordem: terça, quarta, quinta, domingo (como na programação da igreja)
+  ul.innerHTML = "";
+  CULTOS.forEach(function(c){
+    var li = document.createElement("li");
+    var isNext = (c===nx.culto);
+    li.className = "day" + (isNext ? " is-next" : "");
+    var dow = document.createElement("span"); dow.className="dow"; dow.textContent = DIAS[c.dia];
+    var nome = document.createElement("span"); nome.className="name"; nome.textContent = c.nome;
+    if(isNext){var t=document.createElement("span"); t.className="tag"; t.textContent="Próximo"; nome.appendChild(t)}
+    var time = document.createElement("time"); time.textContent = c.hora.replace(":", "h");
+    li.appendChild(dow); li.appendChild(nome); li.appendChild(time);
+    ul.appendChild(li);
+  });
+  document.getElementById("next-name").textContent = nx.culto.nome;
+  document.getElementById("next-time").textContent = DIAS[nx.culto.dia] + ", " + nx.culto.hora.replace(":", "h");
+  document.getElementById("next-when").textContent = textoQuando(nx.delta, nx.hoje);
+}
+renderCultos();
+setInterval(renderCultos, 60000);
+
+/* ===== 2. Clima (Open-Meteo, sem chave de API) ===== */
+var WMO = {
+  0:"Céu limpo",1:"Quase limpo",2:"Parcialmente nublado",3:"Nublado",
+  45:"Neblina",48:"Neblina",51:"Garoa fraca",53:"Garoa",55:"Garoa forte",
+  61:"Chuva fraca",63:"Chuva",65:"Chuva forte",80:"Pancadas fracas",81:"Pancadas de chuva",82:"Pancadas fortes",
+  95:"Trovoadas",96:"Trovoadas com granizo",99:"Trovoadas com granizo"
+};
+function renderClima(d){
+  var box = document.getElementById("weather"); box.innerHTML = "";
+  var c = d.current;
+  var now = document.createElement("div"); now.className="now";
+  var t = document.createElement("span"); t.className="temp"; t.textContent = Math.round(c.temperature_2m) + "°";
+  var cond = document.createElement("span"); cond.className="cond"; cond.textContent = WMO[c.weather_code] || "—";
+  now.appendChild(t); now.appendChild(cond); box.appendChild(now);
+  var meta = document.createElement("div"); meta.className="meta";
+  meta.textContent = "Umidade " + Math.round(c.relative_humidity_2m) + "% · Vento " + Math.round(c.wind_speed_10m) + " km/h · Teresina";
+  box.appendChild(meta);
+  var f = document.createElement("div"); f.className="forecast";
+  for(var i=1;i<=3;i++){
+    var dt = new Date(d.daily.time[i] + "T12:00:00");
+    var el = document.createElement("div"); el.className="fday";
+    var b = document.createElement("b"); b.textContent = DIAS[dt.getDay()].slice(0,3) + " " + dt.getDate();
+    var s1 = document.createElement("span"); s1.textContent = Math.round(d.daily.temperature_2m_min[i]) + "° / " + Math.round(d.daily.temperature_2m_max[i]) + "°";
+    var s2 = document.createElement("span"); s2.style.display="block"; s2.textContent = "Chuva " + (d.daily.precipitation_probability_max[i]||0) + "%";
+    el.appendChild(b); el.appendChild(s1); el.appendChild(s2); f.appendChild(el);
+  }
+  box.appendChild(f);
+}
+(function(){
+  var url = "https://api.open-meteo.com/v1/forecast?latitude=-5.0892&longitude=-42.8019"
+    + "&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m"
+    + "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+    + "&timezone=America%2FFortaleza&forecast_days=4";
+  fetch(url).then(function(r){ if(!r.ok) throw 0; return r.json() }).then(renderClima).catch(function(){
+    document.getElementById("weather").innerHTML = '<p class="status">Não foi possível carregar o clima agora. Tente recarregar a página.</p>';
+  });
+})();
+
+/* ===== 3. Rádio Canaã FM 93,5 (transmissão da sede) ===== */
+var STREAM = "https://stream1.svrdedicado.org/8006/stream";
+var audio = document.getElementById("audio");
+var playBtn = document.getElementById("play");
+var card = document.getElementById("radio-card");
+var statusEl = document.getElementById("station-status");
+function setStatus(t){statusEl.textContent = t}
+playBtn.addEventListener("click", function(){
+  if(!audio.src){ audio.src = STREAM; setStatus("Conectando…") }
+  if(audio.paused){
+    audio.play().catch(function(){ setStatus("Não foi possível tocar. Tente de novo.") });
+  } else {
+    // rádio ao vivo: ao pausar, solta a conexão para voltar direto ao vivo
+    audio.pause(); audio.removeAttribute("src"); audio.load();
+  }
+});
+audio.addEventListener("playing", function(){ card.classList.add("playing"); playBtn.setAttribute("aria-label","Pausar rádio"); setStatus("Tocando ao vivo") });
+audio.addEventListener("pause",   function(){ card.classList.remove("playing"); playBtn.setAttribute("aria-label","Tocar rádio"); setStatus("Pausada · toque em play para voltar ao vivo") });
+audio.addEventListener("waiting", function(){ setStatus("Carregando…") });
+audio.addEventListener("error",   function(){ card.classList.remove("playing"); setStatus("Rádio fora do ar no momento.") });
+document.getElementById("vol").addEventListener("input", function(e){ audio.volume = parseFloat(e.target.value) });
+audio.volume = 0.8;
+
+/* Logo: usa logo-canaa.png ao lado do index.html; se não existir, usa o do site oficial */
+var logo = document.getElementById("logo");
+var LOGO_OFICIAL = "https://ministeriocanaanacional.com/wp-content/uploads/2021/07/cropped-logo-canaa-2020.png";
+logo.addEventListener("error", function(){
+  if(logo.src.indexOf("ministeriocanaanacional.com") < 0){ logo.src = LOGO_OFICIAL }
+  else { logo.style.display = "none" }
+});
+</script>
+</body>
+</html>
+
+</body></html>
